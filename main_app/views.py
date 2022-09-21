@@ -1,18 +1,7 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .models import Finch
 
-class Finch:
-    def __init__(self, name, breed, description, age):
-        self.name = name
-        self.breed = breed
-        self.description = description
-        self.age = age
-
-finches = [
-    Finch('Gref', 'Green Warbler Finch', 'Warble Weeble', 3),
-    Finch('Gryfie', 'Grey Warbler Finch', 'Warble warble', 4),
-    Finch('Monfie', 'Mongrove Finch', 'Hates Tuesgroves', 10),
-    Finch('Smalf', 'Small Tree Finch', 'Hates Big trees', 0),
-]
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -21,4 +10,21 @@ def about(request):
     return render(request, 'about.html')
 
 def finches_index(request):
-    return render(request, 'finches/index.html', {'cats': finches})
+    finches = Finch.objects.all()
+    return render(request, 'finches/index.html', {'finches': finches})
+
+def finches_detail(request, finch_id):
+    finch = finch.objects.get(id=finch_id)
+    return render(request, 'finches/detail.html', {'finch': finch})
+
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
+
+class FinchUpdate(UpdateView):
+    model = Finch
+    fields = ('age', 'breed', 'description')
+
+class FinchDelete(DeleteView):
+    model = Finch
+    success_url = '/finches/'
