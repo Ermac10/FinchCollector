@@ -30,6 +30,7 @@
             <li><a href="/toys">View All Toys</a></li>
             <li><a href="{% url 'finch_create' %}">Add a Finch</a></li>
             <li><a href="{% url 'index' %}">View My Finches</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">Login</a></li>
             <li><a href="{% url 'signup' %}">Signup</a></li>

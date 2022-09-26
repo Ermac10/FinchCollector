@@ -13,7 +13,7 @@ from .models import Finch, Toy
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html', {'page_name': 'Home '})
+    return render(request, 'home.html', {'page_name': 'Home'})
 
 def about(request):
     return render(request, 'about.html')
@@ -30,7 +30,7 @@ class ToyIndex(LoginRequiredMixin, ListView):
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
     feeding_form = FeedingForm()
-    toys_finch_doesnt_have = Finch.objects.exclude(id_in = finch.toys.all().values_list('id'))
+    toys_finch_doesnt_have = Toy.objects.exclude(id__in = finch.toys.all().values_list('id'))
     return render(request, 'finches/detail.html', {
         'finch': finch, 'feeding_form' : feeding_form, 'toys': toys_finch_doesnt_have
         })
